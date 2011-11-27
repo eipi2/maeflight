@@ -1,5 +1,5 @@
-maeflight (1.0.0) unstable; urgency=low
+maeflight (1.0.1) unstable; urgency=low
 
-  * Initial Release.
+  * New icon, date selection today/tomorrow/yesterday
 
  -- Sanjeev Visvanatha <mobiletabletsblog@gmail.com>  Sun, 20 Nov 2011 22:44:38 -0500

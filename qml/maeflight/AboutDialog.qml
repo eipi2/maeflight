@@ -17,17 +17,11 @@
  * along with MaeFlight.  If not, see <http://www.gnu.org/licenses/>
  *
  ***********************************************************************/
-#include <QtGui/QApplication>
-#include "qmlapplicationviewer.h"
+import QtQuick 1.1
+import com.nokia.meego 1.0
 
-Q_DECL_EXPORT int main(int argc, char *argv[])
-{
-    QScopedPointer<QApplication> app(createApplication(argc, argv));
-    QScopedPointer<QmlApplicationViewer> viewer(QmlApplicationViewer::create());
-
-    viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
-    viewer->setMainQmlFile(QLatin1String("qml/maeflight/main.qml"));
-    viewer->showExpanded();
-
-    return app->exec();
+QueryDialog {
+    titleText: "MaeFlight v1.0.1"
+    message: "Copyright Sanjeev Visvanatha 2011\n\n" + "This application is free sofware licenced under the GNU Public License version 2\n\n" + "see http://www.gnu.org/licenses/"
+    acceptButtonText: "Close"
 }

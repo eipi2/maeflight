@@ -1,17 +1,37 @@
+/**********************************************************************
+ * Copyright 2011 Sanjeev Visvanatha
+ *
+ * This file is part of MaeFlight.
+ *
+ * MaeFlight is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * MaeFlight is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with MaeFlight.  If not, see <http://www.gnu.org/licenses/>
+ *
+ ***********************************************************************/
 import QtQuick 1.1
-import com.meego 1.0
+import com.nokia.meego 1.0
 import QtWebKit 1.0
 import com.nokia.extras 1.0
-
+import Qt 4.7
 
 Page {
     id: mainPage
     tools: commonTools
+    orientationLock: PageOrientation.LockPortrait
 
 
         TextField {
                id: airlineBox
-               anchors {left: parent.left; right: parent.right; topMargin: 10}
+               anchors {left: parent.left; right: parent.right; top: parent.top; topMargin: 5}
                platformSipAttributes: SipAttributes { actionKeyHighlighted: true }
                placeholderText: "Airline Code"
                platformStyle: TextFieldStyle { paddingRight: clearButton.width }
@@ -37,12 +57,13 @@ Page {
 
         TextField {
                id: flightBox
-               anchors {left: parent.left; right: parent.right; top: airlineBox.bottom; topMargin: 10}
+               anchors {left: parent.left; right: parent.right; top: airlineBox.bottom; topMargin: 5}
                platformSipAttributes: SipAttributes { actionKeyHighlighted: true }
                placeholderText: "Flight Number"
                platformStyle: TextFieldStyle { paddingRight: clearButton.width }
                validator: IntValidator{bottom: 0; top: 10000000;}
                inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhNoPredictiveText
+               focus: false
 
                Image {
                    id: clearButton2
@@ -61,6 +82,35 @@ Page {
                    }
                }
            }
+
+        function getdates (increment) {var t = new Date() ; t.setDate(increment + t.getDate()) ; return t }
+
+        ButtonRow {
+            id: dateButtons
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: flightBox.bottom
+            anchors.topMargin: 5
+            platformStyle: ButtonStyle { inverted: true }
+
+            Button {
+                id: yesterday;
+                text: Qt.formatDateTime(getdates(-1), "yyyy-MM-dd");
+                checked: false
+            }
+
+            Button {
+                id: today;
+                text: Qt.formatDateTime(getdates(0), "yyyy-MM-dd");
+                checked: true
+            }
+
+            Button {
+                id: tomorrow;
+                text: Qt.formatDateTime(getdates(1), "yyyy-MM-dd");
+                checked: false
+            }
+        }
 
         InfoBanner{
             id: banner1
@@ -109,7 +159,7 @@ Page {
  Flickable{
      id: flick
      clip:  true
-     anchors {left: parent.left; right: parent.right; top: flightBox.bottom; topMargin:10; bottom: search.top; bottomMargin:10}
+     anchors {left: parent.left; right: parent.right; top: dateButtons.bottom; topMargin:5; bottom: search.top; bottomMargin:5}
      width: parent.width; height:parent.height
      contentWidth: parent.width
      contentHeight: 1200//parent.height
@@ -117,7 +167,7 @@ Page {
          id: webView
          preferredWidth: parent.width
          preferredHeight: parent.height
-         anchors {left: mainPage.left; right: mainPage.right; top: flightBox.bottom; topMargin:10}
+         anchors {left: parent.left; right: parent.right; top: dateButtons.bottom; topMargin:5}
          url: '/qml/intro.txt'
          onLoadStarted: {busy1.visible= true; busy1.running= true}
          onLoadFinished: {busy1.running= false; busy1.visible= false}
@@ -145,22 +195,21 @@ Page {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.topMargin: 10
+        anchors.topMargin: 5
         text: qsTr("Search")
         onClicked: {
              busy1.visible= true;
              busy1.running= true;
              var doc = new XMLHttpRequest();
              doc.onreadystatechange = function() {
-                 var b=doc.responseText;
-                 console.log(b);
-                 var result;
-//                if ((result = b.match(/select flight/i)) || (result = b.match(/landed/i)) || (result = b.match(/departed/i)) || (result = b.match(/scheduled/i)) || (result = b.match(/redirected/i)))
+                var b=doc.responseText;
+                console.log(b);
+                var result;
                 if ((result = b.match(/select flight/i)))
                 {
                      console.log(result);
                      webView.settings.autoLoadImages= false
-                     webView.url= 'http://www.flightstats.com/go/Mobile/flightStatusByFlightProcess.do?&airlineCode='+airlineBox.text+'&flightNumber='+flightBox.text
+                     webView.url= 'http://www.flightstats.com/go/Mobile/flightStatusByFlightProcess.do?&airlineCode='+airlineBox.text+'&flightNumber='+flightBox.text+'&departureDate='+dateButtons.checkedButton.text
                      banner1.show();
 
                 }
@@ -168,7 +217,7 @@ Page {
                 {
                      console.log(result);
                      webView.settings.autoLoadImages= false
-                     webView.url= 'http://www.flightstats.com/go/Mobile/flightStatusByFlightProcess.do?&airlineCode='+airlineBox.text+'&flightNumber='+flightBox.text
+                     webView.url= 'http://www.flightstats.com/go/Mobile/flightStatusByFlightProcess.do?&airlineCode='+airlineBox.text+'&flightNumber='+flightBox.text+'&departureDate='+dateButtons.checkedButton.text
                      banner2.show();
 
                 }
@@ -176,7 +225,7 @@ Page {
                 {
                      console.log(result);
                      webView.settings.autoLoadImages= false
-                     webView.url= 'http://www.flightstats.com/go/Mobile/flightStatusByFlightProcess.do?&airlineCode='+airlineBox.text+'&flightNumber='+flightBox.text
+                     webView.url= 'http://www.flightstats.com/go/Mobile/flightStatusByFlightProcess.do?&airlineCode='+airlineBox.text+'&flightNumber='+flightBox.text+'&departureDate='+dateButtons.checkedButton.text
                      banner3.show();
 
                 }
@@ -184,7 +233,7 @@ Page {
                 {
                      console.log(result);
                      webView.settings.autoLoadImages= false
-                     webView.url= 'http://www.flightstats.com/go/Mobile/flightStatusByFlightProcess.do?&airlineCode='+airlineBox.text+'&flightNumber='+flightBox.text
+                     webView.url= 'http://www.flightstats.com/go/Mobile/flightStatusByFlightProcess.do?&airlineCode='+airlineBox.text+'&flightNumber='+flightBox.text+'&departureDate='+dateButtons.checkedButton.text
                      banner4.show();
 
                 }
@@ -192,7 +241,7 @@ Page {
                 {
                      console.log(result);
                      webView.settings.autoLoadImages= false
-                     webView.url= 'http://www.flightstats.com/go/Mobile/flightStatusByFlightProcess.do?&airlineCode='+airlineBox.text+'&flightNumber='+flightBox.text
+                     webView.url= 'http://www.flightstats.com/go/Mobile/flightStatusByFlightProcess.do?&airlineCode='+airlineBox.text+'&flightNumber='+flightBox.text+'&departureDate='+dateButtons.checkedButton.text
                      banner5.show();
 
                 }
@@ -213,7 +262,7 @@ Page {
 
               }
 
-            doc.open("GET", 'http://www.flightstats.com/go/Mobile/flightStatusByFlightProcess.do?&airlineCode='+airlineBox.text+'&flightNumber='+flightBox.text);
+            doc.open("GET", 'http://www.flightstats.com/go/Mobile/flightStatusByFlightProcess.do?&airlineCode='+airlineBox.text+'&flightNumber='+flightBox.text+'&departureDate='+dateButtons.checkedButton.text);
             doc.send();
 
 

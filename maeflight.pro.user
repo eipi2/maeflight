@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by Qt Creator 2.3.1, 2011-11-20T23:38:03. -->
+<!-- Written by Qt Creator 2.3.1, 2011-11-26T16:18:17. -->
 <qtcreator>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -410,18 +410,22 @@
       <valuelist type="QVariantList" key="Qt4ProjectManager.MaemoRunConfiguration.LastDeployedFiles">
        <value type="QString">/home/sanjeev/QtSDK/maeflight-build-harmattan-Harmattan_Platform_API___Qt_SDK__Release/maeflight_0.0.1_armel.deb</value>
        <value type="QString">/home/sanjeev/QtSDK/maeflight-build-harmattan-Harmattan_Platform_API___Qt_SDK__Release/maeflight_1.0.0_armel.deb</value>
+       <value type="QString">/home/sanjeev/QtSDK/maeflight-build-harmattan-Harmattan_Platform_API___Qt_SDK__Release/maeflight_1.0.1_armel.deb</value>
       </valuelist>
       <valuelist type="QVariantList" key="Qt4ProjectManager.MaemoRunConfiguration.LastDeployedHosts">
+       <value type="QString">192.168.0.12</value>
        <value type="QString">192.168.0.12</value>
        <value type="QString">192.168.0.12</value>
       </valuelist>
       <valuelist type="QVariantList" key="Qt4ProjectManager.MaemoRunConfiguration.LastDeployedRemotePaths">
        <value type="QString"></value>
        <value type="QString"></value>
+       <value type="QString"></value>
       </valuelist>
       <valuelist type="QVariantList" key="Qt4ProjectManager.MaemoRunConfiguration.LastDeployedTimes">
        <value type="QDateTime">2011-11-20T22:49:47</value>
-       <value type="QDateTime">2011-11-20T23:20:44</value>
+       <value type="QDateTime">2011-11-26T15:50:42</value>
+       <value type="QDateTime">2011-11-26T16:11:16</value>
       </valuelist>
      </valuemap>
      <value type="int" key="ProjectExplorer.BuildStepList.StepsCount">3</value>
