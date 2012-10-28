@@ -205,7 +205,7 @@ Page {
                 var b=doc.responseText;
                 console.log(b);
                 var result;
-                if ((result = b.match(/select flight/i)))
+                if ((result = b.match(/Select a Flight/i)))
                 {
                      console.log(result);
                      webView.settings.autoLoadImages= false

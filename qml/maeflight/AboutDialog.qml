@@ -21,7 +21,7 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 
 QueryDialog {
-    titleText: "MaeFlight v1.0.1"
+    titleText: "MaeFlight v1.0.2"
     message: "Copyright Sanjeev Visvanatha 2011\n\n" + "This application is free sofware licenced under the GNU Public License version 2\n\n" + "see http://www.gnu.org/licenses/"
     acceptButtonText: "Close"
 }
